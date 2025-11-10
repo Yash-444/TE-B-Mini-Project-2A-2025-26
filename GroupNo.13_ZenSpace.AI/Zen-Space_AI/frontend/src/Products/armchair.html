@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Armchair Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Orbit Controls for user interaction (mouse drag to rotate) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+        #scene-container {
+            width: 100vw;
+            height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+            touch-action: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        #controls-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        .color-group { margin-bottom: 10px; }
+        .color-label { font-size: 0.875rem; font-weight: 600; color: #4b5563; }
+    </style>
+</head>
+<body>
+
+    <div class="p-6 bg-white border-b border-gray-200">
+        <h1 class="text-2xl font-bold text-gray-900">Interactive 3D Armchair</h1>
+        <p id="subtitle" class="text-sm text-gray-500 mt-1">Click and drag to rotate the product.</p>
+    </div>
+
+    <!-- UI Control Panel -->
+    <div id="controls-panel">
+        <h2 class="text-lg font-bold mb-3">Customize</h2>
+        
+        <div class="color-group">
+            <label for="frameColor" class="color-label block mb-1">Frame Color:</label>
+            <input type="color" id="frameColor" value="#8B4513" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+
+        <div class="color-group">
+            <label for="cushionColor" class="color-label block mb-1">Cushion Color:</label>
+            <input type="color" id="cushionColor" value="#333333" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+    </div>
+
+    <div id="scene-container">
+        <!-- The Three.js canvas will be inserted here -->
+    </div>
+
+    <script>
+        // --- Globals ---
+        let scene, camera, renderer, controls, productGroup;
+        let container = document.getElementById('scene-container');
+        let frameMaterial, cushionMaterial;
+
+        /**
+         * Initializes the Three.js scene, camera, renderer, and lighting.
+         */
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xdddddd); 
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            renderer.shadowMap.enabled = true;
+
+            // Lighting
+            scene.add(new THREE.AmbientLight(0x404040, 1.2));
+            const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5);
+            scene.add(hemisphereLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            // Materials
+            frameMaterial = new THREE.MeshStandardMaterial({ 
+                color: parseInt(document.getElementById('frameColor').value.substring(1), 16),
+                roughness: 0.8,
+                metalness: 0.1 
+            });
+            cushionMaterial = new THREE.MeshStandardMaterial({ 
+                color: parseInt(document.getElementById('cushionColor').value.substring(1), 16),
+                roughness: 0.6, 
+                metalness: 0.2 
+            });
+
+            // Event Listeners
+            window.addEventListener('resize', onWindowResize, false);
+            document.getElementById('frameColor').addEventListener('input', (e) => frameMaterial.color.set(e.target.value));
+            document.getElementById('cushionColor').addEventListener('input', (e) => cushionMaterial.color.set(e.target.value));
+        }
+
+        /**
+         * Creates the armchair model.
+         */
+        function createArmchair() {
+            const group = new THREE.Group();
+            const FRAME_THICKNESS = 0.1;
+            const CHAIR_WIDTH = 1.2;
+            const CHAIR_DEPTH = 1.1;
+            const CHAIR_HEIGHT = 1.2;
+            const LEG_HEIGHT = 0.4;
+
+            // --- Create Frame ---
+            const legGeom = new THREE.BoxGeometry(FRAME_THICKNESS, LEG_HEIGHT, FRAME_THICKNESS);
+            const armrestGeom = new THREE.BoxGeometry(FRAME_THICKNESS, FRAME_THICKNESS, CHAIR_DEPTH);
+            const backrestUprightGeom = new THREE.BoxGeometry(FRAME_THICKNESS, CHAIR_HEIGHT - LEG_HEIGHT, FRAME_THICKNESS);
+            const crossbarGeom = new THREE.BoxGeometry(CHAIR_WIDTH - FRAME_THICKNESS * 2, FRAME_THICKNESS, FRAME_THICKNESS);
+
+            const legFL = new THREE.Mesh(legGeom, frameMaterial); legFL.position.set(-CHAIR_WIDTH/2, LEG_HEIGHT/2, CHAIR_DEPTH/2); group.add(legFL);
+            const legFR = new THREE.Mesh(legGeom, frameMaterial); legFR.position.set(CHAIR_WIDTH/2, LEG_HEIGHT/2, CHAIR_DEPTH/2); group.add(legFR);
+            const legBL = new THREE.Mesh(backrestUprightGeom, frameMaterial); legBL.position.set(-CHAIR_WIDTH/2, (CHAIR_HEIGHT-LEG_HEIGHT)/2 + LEG_HEIGHT, -CHAIR_DEPTH/2); group.add(legBL);
+            const legBR = new THREE.Mesh(backrestUprightGeom, frameMaterial); legBR.position.set(CHAIR_WIDTH/2, (CHAIR_HEIGHT-LEG_HEIGHT)/2 + LEG_HEIGHT, -CHAIR_DEPTH/2); group.add(legBR);
+            const armL = new THREE.Mesh(armrestGeom, frameMaterial); armL.position.set(-CHAIR_WIDTH/2, LEG_HEIGHT + FRAME_THICKNESS, 0); group.add(armL);
+            const armR = new THREE.Mesh(armrestGeom, frameMaterial); armR.position.set(CHAIR_WIDTH/2, LEG_HEIGHT + FRAME_THICKNESS, 0); group.add(armR);
+            const crossbarBack = new THREE.Mesh(crossbarGeom, frameMaterial); crossbarBack.position.set(0, LEG_HEIGHT * 0.8, -CHAIR_DEPTH/2); group.add(crossbarBack);
+            const crossbarFront = new THREE.Mesh(crossbarGeom, frameMaterial); crossbarFront.position.set(0, LEG_HEIGHT * 0.8, CHAIR_DEPTH/2); group.add(crossbarFront);
+
+            // --- Create Cushions ---
+            const CUSHION_INSET = 0.05;
+            const seatGeom = new THREE.BoxGeometry(CHAIR_WIDTH - FRAME_THICKNESS*2 - CUSHION_INSET, 0.2, CHAIR_DEPTH - FRAME_THICKNESS - CUSHION_INSET);
+            const seat = new THREE.Mesh(seatGeom, cushionMaterial);
+            seat.position.set(0, LEG_HEIGHT + 0.1, 0);
+            group.add(seat);
+
+            const backGeom = new THREE.BoxGeometry(CHAIR_WIDTH - FRAME_THICKNESS*2 - CUSHION_INSET, CHAIR_HEIGHT - LEG_HEIGHT - FRAME_THICKNESS, 0.2);
+            const back = new THREE.Mesh(backGeom, cushionMaterial);
+            back.position.set(0, (CHAIR_HEIGHT - LEG_HEIGHT - FRAME_THICKNESS)/2 + LEG_HEIGHT + FRAME_THICKNESS, -CHAIR_DEPTH/2 + 0.1);
+            group.add(back);
+            
+            group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
+            return group;
+        }
+
+        function onWindowResize() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- Main Execution ---
+        window.addEventListener('load', () => {
+            init();
+            
+            productGroup = createArmchair();
+            scene.add(productGroup);
+
+            // Auto-center and zoom camera
+            const box = new THREE.Box3().setFromObject(productGroup);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+            cameraZ *= 1.5; // Padding
+
+            camera.position.set(center.x, center.y + size.y * 0.2, center.z + cameraZ);
+            controls.target.copy(center);
+            controls.update();
+
+            animate();
+        });
+    </script>
+
+</body>
+</html>

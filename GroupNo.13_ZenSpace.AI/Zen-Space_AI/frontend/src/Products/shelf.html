@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Product Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Orbit Controls for user interaction (mouse drag to rotate) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        /* Set up the canvas to fill the container and be responsive */
+        body { margin: 0; overflow: hidden; background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+        #scene-container {
+            width: 100vw;
+            height: 80vh; /* Takes up 80% of the viewport height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+            touch-action: none; /* Helps prevent unwanted scrolling on touch devices */
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        #controls-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        #product-selection a {
+            transition: all 0.2s ease-in-out;
+            display: block;
+        }
+        .color-group {
+            margin-bottom: 10px;
+        }
+        .color-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="p-6 bg-white border-b border-gray-200">
+        <h1 class="text-2xl font-bold text-gray-900">Interactive 3D Product Viewer</h1>
+        <p id="subtitle" class="text-sm text-gray-500 mt-1">Select a product to view. Click and drag to rotate.</p>
+    </div>
+
+    <!-- Product Selection Panel -->
+    <div id="product-selection" class="absolute top-24 left-6 z-10 flex flex-col space-y-2">
+        <a href="#shelf" id="btn-shelf" class="px-4 py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400">Shelving Unit</a>
+        <a href="#table" id="btn-table" class="px-4 py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400">Coffee Table</a>
+        <a href="#box" id="btn-box" class="px-4 py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-400">Decorative Box</a>
+    </div>
+
+    <!-- UI Control Panel -->
+    <div id="controls-panel">
+        <h2 class="text-lg font-bold mb-3">Customize</h2>
+        
+        <div id="primaryColorGroup" class="color-group">
+            <label for="primaryColor" id="primaryColorLabel" class="color-label block mb-1">Primary Color:</label>
+            <input type="color" id="primaryColor" value="#deb887" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+
+        <div id="secondaryColorGroup" class="color-group">
+            <label for="secondaryColor" id="secondaryColorLabel" class="color-label block mb-1">Secondary Color:</label>
+            <input type="color" id="secondaryColor" value="#333333" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+    </div>
+
+    <div id="scene-container">
+        <!-- The Three.js canvas will be inserted here -->
+    </div>
+
+    <script>
+        // --- Globals ---
+        let scene, camera, renderer, controls, productGroup;
+        let container = document.getElementById('scene-container');
+        let raycaster, mouse;
+        
+        // --- Materials ---
+        let primaryMaterial, secondaryMaterial;
+        const drawerMeshes = [];
+
+        /**
+         * Initializes the Three.js scene, camera, renderer, and lighting.
+         */
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xdddddd); 
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(3, 2, 4);
+            camera.lookAt(0, 1, 0); 
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            renderer.shadowMap.enabled = true; 
+            renderer.domElement.id = 'three-canvas';
+
+            scene.add(new THREE.AmbientLight(0x404040, 1.2));
+            const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5);
+            scene.add(hemisphereLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true; 
+            
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            initMaterials();
+
+            window.addEventListener('resize', onWindowResize, false);
+            document.getElementById('primaryColor').addEventListener('input', (e) => updateColor(primaryMaterial, e.target.value));
+            document.getElementById('secondaryColor').addEventListener('input', (e) => updateColor(secondaryMaterial, e.target.value));
+            renderer.domElement.addEventListener('click', onCanvasClick, false);
+        }
+
+        function initMaterials() {
+            primaryMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xdeb887, // Default Wood
+                roughness: 0.8,
+                metalness: 0.1 
+            });
+            secondaryMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x333333, // Default Leather
+                roughness: 0.6, 
+                metalness: 0.2 
+            });
+        }
+
+        function updateColor(material, hexColor) {
+            material.color.set(hexColor);
+        }
+        
+        function setActiveButton(activeButtonId) {
+            const buttons = document.querySelectorAll('#product-selection a');
+            buttons.forEach(button => {
+                if (button.id === activeButtonId) {
+                    button.classList.remove('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+                    button.classList.add('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                } else {
+                    button.classList.remove('bg-blue-600', 'text-white', 'hover:bg-blue-700');
+                    button.classList.add('bg-white', 'text-gray-700', 'hover:bg-gray-100');
+                }
+            });
+        }
+
+        function loadProduct(productName) {
+            if (productGroup) {
+                scene.remove(productGroup);
+                productGroup.traverse(child => { if (child.isMesh) child.geometry.dispose(); });
+            }
+            drawerMeshes.length = 0;
+
+            const primaryColorControl = document.getElementById('primaryColorGroup');
+            const secondaryColorControl = document.getElementById('secondaryColorGroup');
+            const primaryColorLabel = document.getElementById('primaryColorLabel');
+            const secondaryColorLabel = document.getElementById('secondaryColorLabel');
+
+            if (productName === 'shelf') {
+                productGroup = createShelvingUnit();
+                document.getElementById('subtitle').innerHTML = "Click and drag to rotate. **Click a drawer to open it!**";
+                primaryColorLabel.textContent = "Frame Color:";
+                secondaryColorLabel.textContent = "Drawer Color:";
+                primaryColorControl.style.display = 'block';
+                secondaryColorControl.style.display = 'block';
+                setActiveButton('btn-shelf');
+            } else if (productName === 'table') {
+                productGroup = createCoffeeTable();
+                document.getElementById('subtitle').innerHTML = "Click and drag to rotate the product.";
+                primaryColorLabel.textContent = "Wood Color:";
+                primaryColorControl.style.display = 'block';
+                secondaryColorControl.style.display = 'none';
+                setActiveButton('btn-table');
+            } else if (productName === 'box') {
+                productGroup = createDecorativeBox();
+                document.getElementById('subtitle').innerHTML = "Click and drag to rotate the product.";
+                primaryColorLabel.textContent = "Box Color:";
+                secondaryColorLabel.textContent = "Lattice Color:";
+                primaryColorControl.style.display = 'block';
+                secondaryColorControl.style.display = 'block';
+                setActiveButton('btn-box');
+            }
+            
+            scene.add(productGroup);
+            // Auto-center and zoom camera on the new product
+            const box = new THREE.Box3().setFromObject(productGroup);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+            cameraZ *= 1.5; // Add some padding
+
+            camera.position.set(center.x, center.y, center.z + cameraZ);
+            controls.target.copy(center);
+            controls.update();
+        }
+
+        function onCanvasClick(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ( ( event.clientX - rect.left ) / rect.width ) * 2 - 1;
+            mouse.y = - ( ( event.clientY - rect.top ) / rect.height ) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(drawerMeshes, true);
+            if (intersects.length > 0) {
+                toggleDrawer(intersects[0].object.parent);
+            }
+        }
+
+        function toggleDrawer(drawerGroup) {
+            const isClosed = drawerGroup.userData.isClosed !== false;
+            drawerGroup.position.z = isClosed ? 0.3 : 0;
+            drawerGroup.userData.isClosed = !isClosed;
+        }
+
+        function createShelvingUnit() {
+            const SHELF_WIDTH = 3.0, SHELF_HEIGHT = 2.5, SHELF_DEPTH = 0.5, BOARD_THICKNESS = 0.05, NUM_COLS = 4, TOTAL_ROWS = 3;
+            const group = new THREE.Group();
+            // This function is collapsed for brevity but remains fully functional
+            const backGeom = new THREE.BoxGeometry(SHELF_WIDTH, SHELF_HEIGHT, BOARD_THICKNESS/2);
+            const backMesh = new THREE.Mesh(backGeom, primaryMaterial); backMesh.position.z = -SHELF_DEPTH / 2 + BOARD_THICKNESS / 4; group.add(backMesh);
+            const sideGeom = new THREE.BoxGeometry(BOARD_THICKNESS, SHELF_HEIGHT, SHELF_DEPTH);
+            const sideL = new THREE.Mesh(sideGeom, primaryMaterial); sideL.position.x = -SHELF_WIDTH / 2 + BOARD_THICKNESS / 2; group.add(sideL);
+            const sideR = new THREE.Mesh(sideGeom, primaryMaterial); sideR.position.x = SHELF_WIDTH / 2 - BOARD_THICKNESS / 2; group.add(sideR);
+            const horizGeom = new THREE.BoxGeometry(SHELF_WIDTH, BOARD_THICKNESS, SHELF_DEPTH);
+            const topShelf = new THREE.Mesh(horizGeom, primaryMaterial); topShelf.position.y = SHELF_HEIGHT / 2 - BOARD_THICKNESS / 2; group.add(topShelf);
+            const bottomShelf = new THREE.Mesh(horizGeom, primaryMaterial); bottomShelf.position.y = -SHELF_HEIGHT / 2 + BOARD_THICKNESS / 2; group.add(bottomShelf);
+            for (let i = 1; i < TOTAL_ROWS; i++) { const shelf = new THREE.Mesh(horizGeom, primaryMaterial); shelf.position.y = (SHELF_HEIGHT / 2) - (i * SHELF_HEIGHT / TOTAL_ROWS); group.add(shelf); }
+            const vertDividerGeom = new THREE.BoxGeometry(BOARD_THICKNESS, SHELF_HEIGHT - BOARD_THICKNESS, SHELF_DEPTH);
+            for (let i = 1; i < NUM_COLS; i++) { const divider = new THREE.Mesh(vertDividerGeom, primaryMaterial); divider.position.x = -SHELF_WIDTH / 2 + (i * SHELF_WIDTH / NUM_COLS); group.add(divider); }
+            const handleMaterial = new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.8, roughness: 0.3 });
+            const SHELF_INNER_W = (SHELF_WIDTH - (NUM_COLS + 1) * BOARD_THICKNESS) / NUM_COLS;
+            const SHELF_INNER_H = (SHELF_HEIGHT - (TOTAL_ROWS + 1) * BOARD_THICKNESS) / TOTAL_ROWS;
+            const drawerCenterY = (SHELF_HEIGHT / 2) - ((TOTAL_ROWS - 1) * SHELF_HEIGHT / TOTAL_ROWS) - (SHELF_INNER_H / 2) - (BOARD_THICKNESS / 2);
+            const drawerFaceGeom = new THREE.BoxGeometry(SHELF_INNER_W, SHELF_INNER_H, BOARD_THICKNESS / 2);
+            const handleGeom = new THREE.BoxGeometry(SHELF_INNER_W * 0.5, BOARD_THICKNESS / 4, BOARD_THICKNESS);
+            for (let i = 0; i < NUM_COLS; i++) { const drawerGroup = new THREE.Group(); drawerGroup.userData.isClosed = true; drawerGroup.position.y = drawerCenterY; drawerGroup.position.x = -SHELF_WIDTH / 2 + (i * SHELF_WIDTH / NUM_COLS) + (SHELF_WIDTH / NUM_COLS / 2); const drawerFace = new THREE.Mesh(drawerFaceGeom, secondaryMaterial); drawerFace.position.z = SHELF_DEPTH / 2 - BOARD_THICKNESS / 4; drawerGroup.add(drawerFace); drawerMeshes.push(drawerFace); const handleMesh = new THREE.Mesh(handleGeom, handleMaterial); handleMesh.position.set(0, 0, SHELF_DEPTH / 2 + BOARD_THICKNESS / 2); drawerGroup.add(handleMesh); group.add(drawerGroup); }
+            group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
+            return group;
+        }
+
+        function createCoffeeTable() {
+            const TABLE_WIDTH = 2.0, TABLE_HEIGHT = 0.8, TABLE_DEPTH = 1.0, LEG_THICKNESS = 0.1, TOP_THICKNESS = 0.08;
+            const group = new THREE.Group();
+            const topGeom = new THREE.BoxGeometry(TABLE_WIDTH, TOP_THICKNESS, TABLE_DEPTH);
+            const topMesh = new THREE.Mesh(topGeom, primaryMaterial); topMesh.position.y = TABLE_HEIGHT / 2 - TOP_THICKNESS / 2; group.add(topMesh);
+            const legGeom = new THREE.BoxGeometry(LEG_THICKNESS, TABLE_HEIGHT - TOP_THICKNESS, LEG_THICKNESS);
+            const positions = [ {x: TABLE_WIDTH/2 - LEG_THICKNESS/2, z: TABLE_DEPTH/2 - LEG_THICKNESS/2}, {x: -TABLE_WIDTH/2 + LEG_THICKNESS/2, z: TABLE_DEPTH/2 - LEG_THICKNESS/2}, {x: TABLE_WIDTH/2 - LEG_THICKNESS/2, z: -TABLE_DEPTH/2 + LEG_THICKNESS/2}, {x: -TABLE_WIDTH/2 + LEG_THICKNESS/2, z: -TABLE_DEPTH/2 + LEG_THICKNESS/2} ];
+            positions.forEach(pos => { const leg = new THREE.Mesh(legGeom, primaryMaterial); leg.position.set(pos.x, 0, pos.z); group.add(leg); });
+            group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
+            return group;
+        }
+        
+        function createDecorativeBox() {
+            const BOX_SIZE = 1.5, BOX_HEIGHT = 0.5;
+            const group = new THREE.Group();
+            const baseGeom = new THREE.BoxGeometry(BOX_SIZE, BOX_HEIGHT, BOX_SIZE);
+            const baseMesh = new THREE.Mesh(baseGeom, primaryMaterial); group.add(baseMesh);
+            const latticeGroup = new THREE.Group();
+            const pieceGeom = new THREE.BoxGeometry(BOX_SIZE * 1.1, 0.02, 0.04);
+            for (let i = 0; i < 24; i++) { const piece = new THREE.Mesh(pieceGeom, secondaryMaterial); piece.rotation.y = (i / 24) * Math.PI * 2; latticeGroup.add(piece); }
+            latticeGroup.position.y = BOX_HEIGHT / 2 + 0.02; group.add(latticeGroup);
+            group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
+            return group;
+        }
+
+        function onWindowResize() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- Simple Router ---
+        function router() {
+            const hash = window.location.hash.substring(1) || 'shelf'; // Default to shelf
+            loadProduct(hash);
+        }
+
+        window.addEventListener('hashchange', router);
+        window.addEventListener('load', () => {
+            init();
+            router(); // Load product based on initial URL
+            animate();
+        });
+    </script>
+
+</body>
+</html>

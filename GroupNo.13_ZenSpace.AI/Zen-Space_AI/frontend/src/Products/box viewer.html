@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Decorative Box Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Orbit Controls for user interaction (mouse drag to rotate) -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #f3f4f6; font-family: 'Inter', sans-serif; }
+        #scene-container {
+            width: 100vw;
+            height: 85vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas {
+            display: block;
+            touch-action: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        #controls-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        .color-group { margin-bottom: 10px; }
+        .color-label { font-size: 0.875rem; font-weight: 600; color: #4b5563; }
+    </style>
+</head>
+<body>
+
+    <div class="p-6 bg-white border-b border-gray-200">
+        <h1 class="text-2xl font-bold text-gray-900">Interactive 3D Decorative Box</h1>
+        <p id="subtitle" class="text-sm text-gray-500 mt-1">Click and drag to rotate the product.</p>
+    </div>
+
+    <!-- UI Control Panel -->
+    <div id="controls-panel">
+        <h2 class="text-lg font-bold mb-3">Customize</h2>
+        
+        <div class="color-group">
+            <label for="boxColor" class="color-label block mb-1">Box Color:</label>
+            <input type="color" id="boxColor" value="#333333" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+
+        <div class="color-group">
+            <label for="latticeColor" class="color-label block mb-1">Lattice Color:</label>
+            <input type="color" id="latticeColor" value="#b8860b" class="w-full h-8 p-1 rounded-md border border-gray-300">
+        </div>
+    </div>
+
+    <div id="scene-container">
+        <!-- The Three.js canvas will be inserted here -->
+    </div>
+
+    <script>
+        // --- Globals ---
+        let scene, camera, renderer, controls, productGroup;
+        let container = document.getElementById('scene-container');
+        let boxMaterial, latticeMaterial;
+
+        /**
+         * Initializes the Three.js scene, camera, renderer, and lighting.
+         */
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xdddddd); 
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            renderer.shadowMap.enabled = true;
+
+            // Lighting
+            scene.add(new THREE.AmbientLight(0x404040, 1.2));
+            const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5);
+            scene.add(hemisphereLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(5, 10, 7.5);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+
+            // Materials
+            boxMaterial = new THREE.MeshStandardMaterial({ 
+                color: parseInt(document.getElementById('boxColor').value.substring(1), 16),
+                roughness: 0.8,
+                metalness: 0.1 
+            });
+            latticeMaterial = new THREE.MeshStandardMaterial({ 
+                color: parseInt(document.getElementById('latticeColor').value.substring(1), 16),
+                roughness: 0.6, 
+                metalness: 0.0 
+            });
+
+            // Event Listeners
+            window.addEventListener('resize', onWindowResize, false);
+            document.getElementById('boxColor').addEventListener('input', (e) => boxMaterial.color.set(e.target.value));
+            document.getElementById('latticeColor').addEventListener('input', (e) => latticeMaterial.color.set(e.target.value));
+        }
+
+        /**
+         * Creates the decorative box model.
+         */
+        function createDecorativeBox() {
+            const BOX_SIZE = 1.5, BOX_HEIGHT = 0.5;
+            const group = new THREE.Group();
+            
+            // Box base
+            const baseGeom = new THREE.BoxGeometry(BOX_SIZE, BOX_HEIGHT, BOX_SIZE);
+            const baseMesh = new THREE.Mesh(baseGeom, boxMaterial);
+            group.add(baseMesh);
+            
+            // --- New Detailed Decorative lattice top ---
+            const latticeGroup = new THREE.Group();
+            const numRings = 10;
+            const maxRadius = BOX_SIZE / 2 * 0.9;
+            const ringThickness = 0.03;
+
+            for (let i = 0; i < numRings; i++) {
+                const currentRadius = maxRadius * (1 - i / numRings);
+                if (currentRadius <= ringThickness) continue; // Avoid creating a ring with no hole
+
+                // Create an octagonal ring using RingGeometry
+                const ringGeom = new THREE.RingGeometry(
+                    currentRadius - ringThickness, // innerRadius
+                    currentRadius,               // outerRadius
+                    8,                           // thetaSegments (makes it an octagon)
+                    1                            // phiSegments
+                );
+                
+                // Align the geometry to be flat on the XZ plane
+                ringGeom.rotateX(-Math.PI / 2);
+                
+                // We rotate the vertices to make the octagon's sides parallel to the box sides
+                const rotationAngle = Math.PI / 8; // 22.5 degrees
+                ringGeom.rotateY(rotationAngle);
+
+                const ringMesh = new THREE.Mesh(ringGeom, latticeMaterial);
+
+                // Add a slight rotation to each successive ring to create the spiral pattern
+                ringMesh.rotation.y = (i * Math.PI) / 16;
+                
+                latticeGroup.add(ringMesh);
+            }
+            
+            latticeGroup.position.y = BOX_HEIGHT / 2 + 0.01; // Position it just on top of the box
+            group.add(latticeGroup);
+            
+            group.traverse(child => { if (child.isMesh) { child.castShadow = true; child.receiveShadow = true; } });
+            return group;
+        }
+
+
+        function onWindowResize() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- Main Execution ---
+        window.addEventListener('load', () => {
+            init();
+            
+            productGroup = createDecorativeBox();
+            scene.add(productGroup);
+
+            // Auto-center and zoom camera
+            const box = new THREE.Box3().setFromObject(productGroup);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+            cameraZ *= 2.0; // Padding
+
+            camera.position.set(center.x, center.y + size.y * 0.5, center.z + cameraZ);
+            controls.target.copy(center);
+            controls.update();
+
+            animate();
+        });
+    </script>
+
+</body>
+</html>
+
