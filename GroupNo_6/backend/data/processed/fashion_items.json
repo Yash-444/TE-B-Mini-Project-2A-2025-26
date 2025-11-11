@@ -1,0 +1,952 @@
+[
+  {
+    "id": 1,
+    "external_id": 1000,
+    "name": "T-Shirts Item 1",
+    "category": "Topwear",
+    "subcategory": "T-Shirts",
+    "article_type": "T-Shirts",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "Winter",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000000/pexels-photo-1000000.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "t-shirts"
+    ],
+    "price_range": "mid",
+    "style_score": 0.61
+  },
+  {
+    "id": 2,
+    "external_id": 1001,
+    "name": "Jackets Item 2",
+    "category": "Topwear",
+    "subcategory": "Jackets",
+    "article_type": "Jackets",
+    "gender": "Men",
+    "base_color": "Blue",
+    "season": "All",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000001/pexels-photo-1000001.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "jackets"
+    ],
+    "price_range": "mid",
+    "style_score": 0.83
+  },
+  {
+    "id": 3,
+    "external_id": 1002,
+    "name": "Bags Item 3",
+    "category": "Accessories",
+    "subcategory": "Bags",
+    "article_type": "Bags",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "Winter",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000002/pexels-photo-1000002.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "bags"
+    ],
+    "price_range": "low",
+    "style_score": 0.74
+  },
+  {
+    "id": 4,
+    "external_id": 1003,
+    "name": "Belts Item 4",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Unisex",
+    "base_color": "Blue",
+    "season": "All",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000003/pexels-photo-1000003.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "high",
+    "style_score": 0.64
+  },
+  {
+    "id": 5,
+    "external_id": 1004,
+    "name": "Formal Shoes Item 5",
+    "category": "Footwear",
+    "subcategory": "Formal Shoes",
+    "article_type": "Formal Shoes",
+    "gender": "Men",
+    "base_color": "Black",
+    "season": "All",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000004/pexels-photo-1000004.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "formal shoes"
+    ],
+    "price_range": "mid",
+    "style_score": 0.79
+  },
+  {
+    "id": 6,
+    "external_id": 1005,
+    "name": "Jeans Item 6",
+    "category": "Bottomwear",
+    "subcategory": "Jeans",
+    "article_type": "Jeans",
+    "gender": "Unisex",
+    "base_color": "Navy",
+    "season": "Winter",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000005/pexels-photo-1000005.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "jeans"
+    ],
+    "price_range": "mid",
+    "style_score": 0.74
+  },
+  {
+    "id": 7,
+    "external_id": 1006,
+    "name": "Sweaters Item 7",
+    "category": "Topwear",
+    "subcategory": "Sweaters",
+    "article_type": "Sweaters",
+    "gender": "Men",
+    "base_color": "Black",
+    "season": "Spring",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000006/pexels-photo-1000006.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "sweaters"
+    ],
+    "price_range": "high",
+    "style_score": 0.93
+  },
+  {
+    "id": 8,
+    "external_id": 1007,
+    "name": "Sneakers Item 8",
+    "category": "Footwear",
+    "subcategory": "Sneakers",
+    "article_type": "Sneakers",
+    "gender": "Women",
+    "base_color": "White",
+    "season": "All",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000007/pexels-photo-1000007.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "sneakers"
+    ],
+    "price_range": "low",
+    "style_score": 0.7
+  },
+  {
+    "id": 9,
+    "external_id": 1008,
+    "name": "Shorts Item 9",
+    "category": "Bottomwear",
+    "subcategory": "Shorts",
+    "article_type": "Shorts",
+    "gender": "Women",
+    "base_color": "Grey",
+    "season": "Winter",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000008/pexels-photo-1000008.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "shorts"
+    ],
+    "price_range": "low",
+    "style_score": 0.71
+  },
+  {
+    "id": 10,
+    "external_id": 1009,
+    "name": "Blouses Item 10",
+    "category": "Topwear",
+    "subcategory": "Blouses",
+    "article_type": "Blouses",
+    "gender": "Unisex",
+    "base_color": "Navy",
+    "season": "Fall",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000009/pexels-photo-1000009.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "blouses"
+    ],
+    "price_range": "low",
+    "style_score": 0.87
+  },
+  {
+    "id": 11,
+    "external_id": 1010,
+    "name": "Shorts Item 11",
+    "category": "Bottomwear",
+    "subcategory": "Shorts",
+    "article_type": "Shorts",
+    "gender": "Unisex",
+    "base_color": "Black",
+    "season": "Winter",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000010/pexels-photo-1000010.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "shorts"
+    ],
+    "price_range": "high",
+    "style_score": 0.74
+  },
+  {
+    "id": 12,
+    "external_id": 1011,
+    "name": "Belts Item 12",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Men",
+    "base_color": "Black",
+    "season": "All",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000011/pexels-photo-1000011.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "high",
+    "style_score": 0.71
+  },
+  {
+    "id": 13,
+    "external_id": 1012,
+    "name": "Formal Dress Item 13",
+    "category": "Dress",
+    "subcategory": "Formal Dress",
+    "article_type": "Formal Dress",
+    "gender": "Women",
+    "base_color": "White",
+    "season": "Summer",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000012/pexels-photo-1000012.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "formal dress"
+    ],
+    "price_range": "mid",
+    "style_score": 0.81
+  },
+  {
+    "id": 14,
+    "external_id": 1013,
+    "name": "Watches Item 14",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "article_type": "Watches",
+    "gender": "Unisex",
+    "base_color": "White",
+    "season": "All",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000013/pexels-photo-1000013.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "watches"
+    ],
+    "price_range": "mid",
+    "style_score": 0.72
+  },
+  {
+    "id": 15,
+    "external_id": 1014,
+    "name": "Maxi Dress Item 15",
+    "category": "Dress",
+    "subcategory": "Maxi Dress",
+    "article_type": "Maxi Dress",
+    "gender": "Unisex",
+    "base_color": "Brown",
+    "season": "All",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000014/pexels-photo-1000014.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "maxi dress"
+    ],
+    "price_range": "low",
+    "style_score": 0.84
+  },
+  {
+    "id": 16,
+    "external_id": 1015,
+    "name": "T-Shirts Item 16",
+    "category": "Topwear",
+    "subcategory": "T-Shirts",
+    "article_type": "T-Shirts",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "Spring",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000015/pexels-photo-1000015.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "t-shirts"
+    ],
+    "price_range": "low",
+    "style_score": 0.73
+  },
+  {
+    "id": 17,
+    "external_id": 1016,
+    "name": "Trousers Item 17",
+    "category": "Bottomwear",
+    "subcategory": "Trousers",
+    "article_type": "Trousers",
+    "gender": "Unisex",
+    "base_color": "Blue",
+    "season": "All",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000016/pexels-photo-1000016.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "trousers"
+    ],
+    "price_range": "low",
+    "style_score": 0.68
+  },
+  {
+    "id": 18,
+    "external_id": 1017,
+    "name": "Casual Dress Item 18",
+    "category": "Dress",
+    "subcategory": "Casual Dress",
+    "article_type": "Casual Dress",
+    "gender": "Women",
+    "base_color": "Blue",
+    "season": "Summer",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000017/pexels-photo-1000017.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "casual dress"
+    ],
+    "price_range": "mid",
+    "style_score": 0.93
+  },
+  {
+    "id": 19,
+    "external_id": 1018,
+    "name": "Casual Dress Item 19",
+    "category": "Dress",
+    "subcategory": "Casual Dress",
+    "article_type": "Casual Dress",
+    "gender": "Men",
+    "base_color": "Blue",
+    "season": "Fall",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000018/pexels-photo-1000018.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "casual dress"
+    ],
+    "price_range": "low",
+    "style_score": 0.77
+  },
+  {
+    "id": 20,
+    "external_id": 1019,
+    "name": "Blouses Item 20",
+    "category": "Topwear",
+    "subcategory": "Blouses",
+    "article_type": "Blouses",
+    "gender": "Men",
+    "base_color": "Red",
+    "season": "Winter",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000019/pexels-photo-1000019.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "blouses"
+    ],
+    "price_range": "high",
+    "style_score": 0.92
+  },
+  {
+    "id": 21,
+    "external_id": 1020,
+    "name": "Jeans Item 21",
+    "category": "Bottomwear",
+    "subcategory": "Jeans",
+    "article_type": "Jeans",
+    "gender": "Unisex",
+    "base_color": "Black",
+    "season": "Winter",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000020/pexels-photo-1000020.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "jeans"
+    ],
+    "price_range": "high",
+    "style_score": 0.86
+  },
+  {
+    "id": 22,
+    "external_id": 1021,
+    "name": "Belts Item 22",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Women",
+    "base_color": "White",
+    "season": "Spring",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000021/pexels-photo-1000021.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "low",
+    "style_score": 0.86
+  },
+  {
+    "id": 23,
+    "external_id": 1022,
+    "name": "Shorts Item 23",
+    "category": "Bottomwear",
+    "subcategory": "Shorts",
+    "article_type": "Shorts",
+    "gender": "Men",
+    "base_color": "White",
+    "season": "All",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000022/pexels-photo-1000022.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "shorts"
+    ],
+    "price_range": "mid",
+    "style_score": 0.7
+  },
+  {
+    "id": 24,
+    "external_id": 1023,
+    "name": "Jeans Item 24",
+    "category": "Bottomwear",
+    "subcategory": "Jeans",
+    "article_type": "Jeans",
+    "gender": "Women",
+    "base_color": "Black",
+    "season": "Spring",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000023/pexels-photo-1000023.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "jeans"
+    ],
+    "price_range": "high",
+    "style_score": 0.61
+  },
+  {
+    "id": 25,
+    "external_id": 1024,
+    "name": "Jeans Item 25",
+    "category": "Bottomwear",
+    "subcategory": "Jeans",
+    "article_type": "Jeans",
+    "gender": "Women",
+    "base_color": "Blue",
+    "season": "All",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000024/pexels-photo-1000024.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "jeans"
+    ],
+    "price_range": "high",
+    "style_score": 0.82
+  },
+  {
+    "id": 26,
+    "external_id": 1025,
+    "name": "Belts Item 26",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Men",
+    "base_color": "Black",
+    "season": "Spring",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000025/pexels-photo-1000025.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "low",
+    "style_score": 0.94
+  },
+  {
+    "id": 27,
+    "external_id": 1026,
+    "name": "Sandals Item 27",
+    "category": "Footwear",
+    "subcategory": "Sandals",
+    "article_type": "Sandals",
+    "gender": "Men",
+    "base_color": "Brown",
+    "season": "Summer",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000026/pexels-photo-1000026.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "sandals"
+    ],
+    "price_range": "low",
+    "style_score": 0.67
+  },
+  {
+    "id": 28,
+    "external_id": 1027,
+    "name": "Blouses Item 28",
+    "category": "Topwear",
+    "subcategory": "Blouses",
+    "article_type": "Blouses",
+    "gender": "Unisex",
+    "base_color": "Blue",
+    "season": "Fall",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000027/pexels-photo-1000027.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "blouses"
+    ],
+    "price_range": "high",
+    "style_score": 0.72
+  },
+  {
+    "id": 29,
+    "external_id": 1028,
+    "name": "Watches Item 29",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "article_type": "Watches",
+    "gender": "Women",
+    "base_color": "Green",
+    "season": "Spring",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000028/pexels-photo-1000028.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "watches"
+    ],
+    "price_range": "low",
+    "style_score": 0.85
+  },
+  {
+    "id": 30,
+    "external_id": 1029,
+    "name": "Boots Item 30",
+    "category": "Footwear",
+    "subcategory": "Boots",
+    "article_type": "Boots",
+    "gender": "Women",
+    "base_color": "Green",
+    "season": "Summer",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000029/pexels-photo-1000029.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "boots"
+    ],
+    "price_range": "mid",
+    "style_score": 0.74
+  },
+  {
+    "id": 31,
+    "external_id": 1030,
+    "name": "Maxi Dress Item 31",
+    "category": "Dress",
+    "subcategory": "Maxi Dress",
+    "article_type": "Maxi Dress",
+    "gender": "Women",
+    "base_color": "Red",
+    "season": "Spring",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000030/pexels-photo-1000030.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "maxi dress"
+    ],
+    "price_range": "mid",
+    "style_score": 0.64
+  },
+  {
+    "id": 32,
+    "external_id": 1031,
+    "name": "Jewelry Item 32",
+    "category": "Accessories",
+    "subcategory": "Jewelry",
+    "article_type": "Jewelry",
+    "gender": "Women",
+    "base_color": "White",
+    "season": "Fall",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000031/pexels-photo-1000031.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "jewelry"
+    ],
+    "price_range": "low",
+    "style_score": 0.62
+  },
+  {
+    "id": 33,
+    "external_id": 1032,
+    "name": "Shirts Item 33",
+    "category": "Topwear",
+    "subcategory": "Shirts",
+    "article_type": "Shirts",
+    "gender": "Men",
+    "base_color": "Brown",
+    "season": "Summer",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000032/pexels-photo-1000032.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "shirts"
+    ],
+    "price_range": "mid",
+    "style_score": 0.71
+  },
+  {
+    "id": 34,
+    "external_id": 1033,
+    "name": "Maxi Dress Item 34",
+    "category": "Dress",
+    "subcategory": "Maxi Dress",
+    "article_type": "Maxi Dress",
+    "gender": "Women",
+    "base_color": "Blue",
+    "season": "Winter",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000033/pexels-photo-1000033.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "maxi dress"
+    ],
+    "price_range": "low",
+    "style_score": 0.93
+  },
+  {
+    "id": 35,
+    "external_id": 1034,
+    "name": "Belts Item 35",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Men",
+    "base_color": "Green",
+    "season": "Summer",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000034/pexels-photo-1000034.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "low",
+    "style_score": 0.8
+  },
+  {
+    "id": 36,
+    "external_id": 1035,
+    "name": "Sneakers Item 36",
+    "category": "Footwear",
+    "subcategory": "Sneakers",
+    "article_type": "Sneakers",
+    "gender": "Women",
+    "base_color": "Blue",
+    "season": "All",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000035/pexels-photo-1000035.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "sneakers"
+    ],
+    "price_range": "low",
+    "style_score": 0.85
+  },
+  {
+    "id": 37,
+    "external_id": 1036,
+    "name": "Shirts Item 37",
+    "category": "Topwear",
+    "subcategory": "Shirts",
+    "article_type": "Shirts",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "All",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000036/pexels-photo-1000036.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "shirts"
+    ],
+    "price_range": "mid",
+    "style_score": 0.82
+  },
+  {
+    "id": 38,
+    "external_id": 1037,
+    "name": "Jeans Item 38",
+    "category": "Bottomwear",
+    "subcategory": "Jeans",
+    "article_type": "Jeans",
+    "gender": "Women",
+    "base_color": "Red",
+    "season": "Spring",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000037/pexels-photo-1000037.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "jeans"
+    ],
+    "price_range": "high",
+    "style_score": 0.9
+  },
+  {
+    "id": 39,
+    "external_id": 1038,
+    "name": "Shorts Item 39",
+    "category": "Bottomwear",
+    "subcategory": "Shorts",
+    "article_type": "Shorts",
+    "gender": "Men",
+    "base_color": "Blue",
+    "season": "Fall",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000038/pexels-photo-1000038.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "bottomwear",
+      "shorts"
+    ],
+    "price_range": "low",
+    "style_score": 0.93
+  },
+  {
+    "id": 40,
+    "external_id": 1039,
+    "name": "Sandals Item 40",
+    "category": "Footwear",
+    "subcategory": "Sandals",
+    "article_type": "Sandals",
+    "gender": "Men",
+    "base_color": "Navy",
+    "season": "Summer",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000039/pexels-photo-1000039.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "sandals"
+    ],
+    "price_range": "low",
+    "style_score": 0.88
+  },
+  {
+    "id": 41,
+    "external_id": 1040,
+    "name": "Boots Item 41",
+    "category": "Footwear",
+    "subcategory": "Boots",
+    "article_type": "Boots",
+    "gender": "Men",
+    "base_color": "Navy",
+    "season": "All",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000040/pexels-photo-1000040.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "boots"
+    ],
+    "price_range": "high",
+    "style_score": 0.72
+  },
+  {
+    "id": 42,
+    "external_id": 1041,
+    "name": "Bags Item 42",
+    "category": "Accessories",
+    "subcategory": "Bags",
+    "article_type": "Bags",
+    "gender": "Men",
+    "base_color": "Navy",
+    "season": "Winter",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000041/pexels-photo-1000041.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "bags"
+    ],
+    "price_range": "high",
+    "style_score": 0.87
+  },
+  {
+    "id": 43,
+    "external_id": 1042,
+    "name": "Blouses Item 43",
+    "category": "Topwear",
+    "subcategory": "Blouses",
+    "article_type": "Blouses",
+    "gender": "Men",
+    "base_color": "Black",
+    "season": "Summer",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000042/pexels-photo-1000042.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "blouses"
+    ],
+    "price_range": "low",
+    "style_score": 0.87
+  },
+  {
+    "id": 44,
+    "external_id": 1043,
+    "name": "Sandals Item 44",
+    "category": "Footwear",
+    "subcategory": "Sandals",
+    "article_type": "Sandals",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "Winter",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000043/pexels-photo-1000043.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "footwear",
+      "sandals"
+    ],
+    "price_range": "high",
+    "style_score": 0.65
+  },
+  {
+    "id": 45,
+    "external_id": 1044,
+    "name": "Sweaters Item 45",
+    "category": "Topwear",
+    "subcategory": "Sweaters",
+    "article_type": "Sweaters",
+    "gender": "Unisex",
+    "base_color": "Red",
+    "season": "Spring",
+    "usage": "Formal",
+    "image_url": "https://images.pexels.com/photos/1000044/pexels-photo-1000044.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "topwear",
+      "sweaters"
+    ],
+    "price_range": "low",
+    "style_score": 0.66
+  },
+  {
+    "id": 46,
+    "external_id": 1045,
+    "name": "Maxi Dress Item 46",
+    "category": "Dress",
+    "subcategory": "Maxi Dress",
+    "article_type": "Maxi Dress",
+    "gender": "Men",
+    "base_color": "Brown",
+    "season": "Winter",
+    "usage": "Sports",
+    "image_url": "https://images.pexels.com/photos/1000045/pexels-photo-1000045.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "maxi dress"
+    ],
+    "price_range": "high",
+    "style_score": 0.79
+  },
+  {
+    "id": 47,
+    "external_id": 1046,
+    "name": "Casual Dress Item 47",
+    "category": "Dress",
+    "subcategory": "Casual Dress",
+    "article_type": "Casual Dress",
+    "gender": "Women",
+    "base_color": "Brown",
+    "season": "Fall",
+    "usage": "Work",
+    "image_url": "https://images.pexels.com/photos/1000046/pexels-photo-1000046.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "casual dress"
+    ],
+    "price_range": "high",
+    "style_score": 0.82
+  },
+  {
+    "id": 48,
+    "external_id": 1047,
+    "name": "Watches Item 48",
+    "category": "Accessories",
+    "subcategory": "Watches",
+    "article_type": "Watches",
+    "gender": "Unisex",
+    "base_color": "Black",
+    "season": "Fall",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000047/pexels-photo-1000047.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "watches"
+    ],
+    "price_range": "high",
+    "style_score": 0.71
+  },
+  {
+    "id": 49,
+    "external_id": 1048,
+    "name": "Belts Item 49",
+    "category": "Accessories",
+    "subcategory": "Belts",
+    "article_type": "Belts",
+    "gender": "Men",
+    "base_color": "Navy",
+    "season": "Summer",
+    "usage": "Party",
+    "image_url": "https://images.pexels.com/photos/1000048/pexels-photo-1000048.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "accessories",
+      "belts"
+    ],
+    "price_range": "high",
+    "style_score": 0.64
+  },
+  {
+    "id": 50,
+    "external_id": 1049,
+    "name": "Casual Dress Item 50",
+    "category": "Dress",
+    "subcategory": "Casual Dress",
+    "article_type": "Casual Dress",
+    "gender": "Unisex",
+    "base_color": "Green",
+    "season": "Fall",
+    "usage": "Casual",
+    "image_url": "https://images.pexels.com/photos/1000049/pexels-photo-1000049.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "tags": [
+      "dress",
+      "casual dress"
+    ],
+    "price_range": "high",
+    "style_score": 0.8
+  }
+]
