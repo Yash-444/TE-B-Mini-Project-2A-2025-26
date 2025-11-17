@@ -1,9 +1,0 @@
-Flask
-pandas
-scikit-learn
-nltk
-joblib
-py-bcrypt
-requests
-SpeechRecognition
-pyttsx3

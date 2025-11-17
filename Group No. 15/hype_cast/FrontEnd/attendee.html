@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Check Show Hype | HypeCast</title>
+  <link rel="stylesheet" href="attendee_style.css">
+</head>
+<body>
+  <div class="center-wrapper">
+    <form id="hypeForm" class="form-container visible">
+      <h2>🎤 Check Show Hype & Worthiness</h2>
+
+      <label for="artistName">Artist Name</label>
+      <input type="text" id="artistName" name="artistName" placeholder="e.g. Martin Garrix" required />
+
+      <label for="ticketPrice">Ticket Price (₹)</label>
+
+      <input type="number" id="ticketPrice" name="ticketPrice" required min="1" step="any" />
+
+      <form id="hypeForm" class="form-container visible">
+        <button id="Nextbtn" type="submit">Check Hype</button> 
+      </form>
+      <div class="loading hidden" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing hype...</p>
+      </div>
+
+      <div id="result" class="hidden"></div>
+      <div id="error" class="hidden"></div>
+    </form>
+  </div>
+<script src="attendee.js"></script>
+</body>
+</html>

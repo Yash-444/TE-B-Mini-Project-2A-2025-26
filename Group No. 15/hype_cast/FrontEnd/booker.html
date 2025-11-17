@@ -1,0 +1,66 @@
+<!-- booker.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book an Artist | HypeCast</title>
+  <link rel="stylesheet" href="booker_style.css">
+</head>
+<body>
+  <div class="center-wrapper">
+    <!-- Initial Form -->
+    <div class="form-container visible" id="initialForm">
+      <h2>🎧 Book Your Artist</h2>
+      <label for="artistInitial">Which artist are you planning on booking?</label>
+      <input type="text" id="artistInitial" name="artistName" placeholder="e.g. Martin Garrix" required />
+      
+      <label for="eventType">Event Type</label>
+      <select id="eventType" name="eventType">
+        <option>Club shows</option>
+        <option>Multi-city Tour</option>
+        <option>Solo Show</option>
+      </select>
+      
+      <button id="nextBtn" type="button">Next</button>
+    </div>
+
+
+    <!-- Detailed Form -->
+    <form id="bookingForm" class="form-container hidden" method="post" action="/agent">
+      <input type="hidden" id="artistName" name="artistName"/>
+      
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" required />
+      
+      <label for="venue">Venue</label>
+      <input type="text" id="venue" name="venue" required />
+      
+      <label for="capacity">Capacity</label>
+      <input type="number" id="capacity" name="capacity" required min="1" />
+      
+      <label for="season">Preferred Season/Month</label>
+      <input type="text" id="season" name="season" required />
+      
+      <label for="estimatedCost">Ticket Price (₹)</label>
+      <input type="number" id="estimatedCost" name="ticketPrice" required min="1" step="any" />
+      
+      <label for="genre">Genre</label>
+      <input type="text" id="genre" name="genre" required />
+      
+      <label for="date">Event Date</label>
+      <input type="date" id="date" name="date" required />
+      
+      <button type="submit">Check Feasibility</button>
+      <div class="loading hidden" id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing feasibility...</p>
+      </div>
+      <div id="result" class="hidden"></div>
+      <div id="error" class="hidden"></div>
+    </form>
+  </div>
+<script src="booker.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!-- attendee_analysis.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attendee Insights | HypeCast</title>
+  <link rel="stylesheet" href="hype_style.css">
+  <script src="libs/chart.min.js"></script>
+  <style>
+  body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), /* Lighter gradient */
+    url("/FrontEnd/Images/10-23-25-MartinGarrix-PhotoCredit-@bjohnsonxar-11.webp") no-repeat center center;
+  background-size: cover;
+  z-index: -2;
+}  
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /*.analysis-container {
+      background: rgba(30, 30, 30, 0.95);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 700px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 30px rgba(255, 0, 150, 0.6);
+    }*/
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff0096;
+      /*text-shadow: 0 0 10px #ff0096;*/
+      margin-bottom: 30px;
+    }
+
+    #result-text {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    #result-text p {
+      margin: 10px 0;
+      padding: 8px;
+      /*background: rgba(255, 255, 255, 0.05);*/
+      border-radius: 8px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: #ff0096;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #e60086;
+      box-shadow: 0 0 15px #ff0096;
+    }
+
+    canvas {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .must-attend { color: #ff0096; font-weight: bold; }
+    .worth-attending { color: #00ffc3; font-weight: bold; }
+    .consider-attending { color: #ffcc00; font-weight: bold; }
+    .might-skip { color: #666; font-weight: bold; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="analysis-container">
+    <h1>🎫 Show Recommendation</h1>
+    <div id="result-text">Loading prediction...</div>
+    <canvas id="attendeeChart" width="400" height="200"></canvas>
+    <br>
+    <a href="attendee.html" class="back-btn">🔙 Check Another Artist</a>
+  </div>
+
+  <script src="result_attendee.js"></script>
+</body>
+</html>

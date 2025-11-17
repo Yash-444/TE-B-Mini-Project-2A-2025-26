@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Agent Analysis | HypeCast</title>
+  <link rel="stylesheet" href="hype_style.css">
+  <script src="libs/chart.min.js"></script>
+  <style>
+     body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), /* Lighter gradient */
+    url("/FrontEnd/Images/maxresdefault.jpg") no-repeat center center;
+  background-size: cover;
+  z-index: -2;
+}  
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /*background: #0d0d0d;*/
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .analysis-container {
+      /*background: rgba(20, 20, 20, 0.95);*/
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      /*box-shadow: 0 0 30px rgba(0, 255, 200, 0.6);*/
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffc3;
+      text-shadow: 0 0 10px #00ffc3;
+      margin-bottom: 30px;
+    }
+
+    #result-text {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    #result-text p {
+      margin: 10px 0;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      background: #00ffc3;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #00e6b0;
+      box-shadow: 0 0 15px #00ffc3;
+    }
+
+    canvas {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .badge-success { color: #00ffc3; font-weight: bold; }
+    .badge-danger { color: #ff0096; font-weight: bold; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="analysis-container">
+    <h1>🎧 Booking Feasibility Report</h1>
+    <div id="result-text"></div>
+    <canvas id="agentChart" width="400" height="200"></canvas>
+    <br>
+    <a href="booker.html" class="back-btn">🔙 Book Another Artist</a>
+  </div>
+
+  <script src="result_agent.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+/* Reset & Base Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fullscreen Video Background */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* slight dark overlay */
+  z-index: -1;
+}
+
+/* Section Sizing */
+section {
+  width: 100%;
+}
+
+/* Intro Section */
+.intro-section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+}
+
+.content {
+  max-width: 850px;
+  z-index: 2;
+}
+
+.content h1 {
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+  text-shadow: 0 0 15px #000;
+}
+
+.content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+}
+
+.swipe-down {
+  margin-top: 30px;
+  font-size: 1.2rem;
+  animation: bounce 2s infinite;
+  opacity: 0.85;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Role Section */
+.role-container {
+  padding: 100px 20px;
+  color: white;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.role-container h2 {
+  font-size: 2.2rem;
+  text-shadow: 0 0 10px black;
+  margin-bottom: 50px;
+}
+
+.role-options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Martin Garrix Style Button Aesthetic */
+.role-button {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid #fff;
+  padding: 20px 50px;
+  border-radius: 50px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.role-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+  border-color: #f0f0f0;
+}
+
+/* Fade-in Animation for Role Buttons */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.purpose-section {
+  
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  
+}
+
+.purpose-content {
+  max-width: 900px;
+  margin: auto;
+}
+
+.purpose-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  
+}
+
+.purpose-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  
+}
