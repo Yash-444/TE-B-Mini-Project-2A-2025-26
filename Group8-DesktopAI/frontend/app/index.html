@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VeerAI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <button class="new-chat-btn">＋ New Chat</button>
+            <div class="online-toggle">
+                <label for="online-switch">Online Features</label>
+                <label class="switch">
+                    <input type="checkbox" id="online-switch">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <nav class="history"></nav>
+        </aside>
+
+        <main class="chat-area">
+            <button id="sidebar-toggle">☰</button>
+
+            <div id="conversation-display">
+                <div class="welcome-screen">
+                    <h1>VeerAI</h1>
+                    <p>Your Intelligent Desktop Assistant</p>
+                </div>
+            </div>
+            <form id="input-form">
+                <textarea id="query-input" placeholder="Ask VeerAI anything..." required></textarea>
+                <button type="submit" id="send-btn" title="Send Message">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" /></svg>
+                </button>
+            </form>
+        </main>
+    </div>
+    <script src="renderer.js"></script>
+</body>
+</html>
