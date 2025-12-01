@@ -1,0 +1,27 @@
+streamlit
+google-generativeai>=0.7.0
+pandas
+numpy
+scipy
+scikit-learn # For potential data analysis models
+python-dotenv
+pillow
+pytesseract
+flask
+flask-login
+flask-wtf
+flask-limiter
+flask-mail
+gunicorn
+redis
+rq
+mysql-connector-python
+passlib[bcrypt]
+sentence-transformers
+faiss-cpu
+sympy
+
+# Document processing libraries
+PyPDF2>=3.0.0
+python-docx>=1.1.0
+docx2txt>=0.8
